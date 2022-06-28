@@ -1,0 +1,83 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 
+.initialScreen {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+.gameSetUp {
+    display: grid;
+    width: 700px;
+    height: 400px;
+} */
+
+.hidden {
+    visibility: hidden;
+    display: none;
+    }
+
+.gameScreen {
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 20px;
+    width: 60%;
+    border-style: solid;
+    align-items: center;
+    justify-content: center;
+}
+
+.topnav{
+    grid-area: 1/1/2/4;
+    display: flex;
+    background-color: aqua;
+    justify-content: center;
+}
+.gameboard{
+    grid-area: 2/1/3/4;
+    height: 100%;
+    width: 100%;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 8rem 8rem 8rem;
+    grid-template-rows: 8rem 8rem 8rem;
+}
+
+.space {
+    width: 100%;
+    height: 100%;
+}
+
+.bottomnav {
+    grid-area: 3/1/4/4;
+    display: flex;
+    background-color: aqua;
+    justify-content: space-between;
+}
+
+.bottomnav > p {
+    position: relative;
+    left: 2em;
+}
+
+.bottomnav > button {
+    position: relative;
+    right: 2em;
+}
+/* What to do: add special font, make the buttons and text fields nice. */

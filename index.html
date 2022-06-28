@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="initialScreen hidden">
+        <div class="gameSetUp hidden">
+            <fieldset>
+                <h2>Choose your game settings</h2>
+                <div>Player one name X
+                    <input type="text" name="playerOneName" id="playerOneName">
+                </div>
+                <div>Player two name O
+                    <input type="text" name="playerTwoName" id="playerTwoName">
+                </div>
+                <div>Play against an AI.
+                    <input type="checkbox" name="playerAI" id="playerAI">
+                    <span class="slider"></span>
+                </div>
+                <div>Who should move first?
+                    X<input type="checkbox" id="startX" name="startX">
+                    O<input type="checkbox" id="startO" name="startO">
+                </div>
+                <button id="startGame">Start the game</button>
+            </fieldset>
+        </div>
+    </div>
+    <div class="gameScreen">
+        <div class="topnav ">Tic Tac Toe</div>
+        <div class="gameboard ">
+            <div class="buttons">
+                <button id="0" class="space field"></button>
+                <button id="1" class="space field"></button>
+                <button id="2" class="space field"></button>
+                <button id="3" class="space field"></button>
+                <button id="4" class="space field"></button>
+                <button id="5" class="space field"></button>
+                <button id="6" class="space field"></button>
+                <button id="7" class="space field"></button>
+                <button id="8" class="space field"></button>
+            </div>
+        </div>
+        <div class="bottomnav"> 
+            <p>Created by Blazej Wartalski</p>
+            <button id="restart">
+                Restart
+            </button>
+        </div>
+        
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
