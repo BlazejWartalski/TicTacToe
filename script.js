@@ -33,7 +33,6 @@ const winCondition = [
 function initialiseTheGame(packagedValues) {
     currentPlayer = packagedValues.firstPlayer;
     computerPlayer = packagedValues.AI;
-    console.log(computerPlayer);
     playerOneName = packagedValues.nameP1;
     playerTwoName = packagedValues.nameP2;
     btns.forEach((button) => {
@@ -68,7 +67,6 @@ function initialiseTheGame(packagedValues) {
                         return currentPlayer = "O";
                     }
                 } else if (currentPlayer == "O" && computerPlayer == true) {
-                        console.log("pls");
                         computerMove();
                         if (findWinner(playerTwoScore)) {
                         } else {
