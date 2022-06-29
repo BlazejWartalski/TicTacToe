@@ -33,24 +33,46 @@ const winCondition = [
 function initialiseTheGame(packagedValues) {
     currentPlayer = packagedValues.firstPlayer;
     computerPlayer = packagedValues.AI;
+    console.log(computerPlayer);
     playerOneName = packagedValues.nameP1;
     playerTwoName = packagedValues.nameP2;
     btns.forEach((button) => {
         if (currentPlayer == "O" && computerPlayer == true) {
-            computerMove(); }
-        else 
+            computerMove();
+            return currentPlayer = "X"
+        }
+        // if (currentPlayer == "O" && computerPlayer == true) {
+        //     computerMove();
+        //     if (findWinner(playerTwoScore)) {
+        //     } else {
+        //     return currentPlayer = "X" }
         button.addEventListener("click", () => {
             if (button.classList.contains("checked")) {
                 alert("this space is already taken")
             } else {
-                if (currentPlayer == "X") {
+                if (currentPlayer == "X" && computerPlayer == true) {
                     button.classList.add('checked');
                     button.textContent = currentPlayer
                     playerOneScore.push(button.id)
                     if (findWinner(playerOneScore)) {
                     } else {
-                    currentPlayer = "O"
+                        currentPlayer = "O";
+                        return computerMove();
                     }
+                } else if (currentPlayer == "X" && computerPlayer == false) {
+                    button.classList.add('checked');
+                    button.textContent = currentPlayer
+                    playerOneScore.push(button.id)
+                    if (findWinner(playerOneScore)) {
+                    } else {
+                        return currentPlayer = "O";
+                    }
+                } else if (currentPlayer == "O" && computerPlayer == true) {
+                        console.log("pls");
+                        computerMove();
+                        if (findWinner(playerTwoScore)) {
+                        } else {
+                        return currentPlayer = "X" }
                 } else if (currentPlayer == "O" && computerPlayer == false) {
                     button.classList.add('checked');
                     button.textContent = currentPlayer
