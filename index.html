@@ -8,31 +8,38 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="initialScreen hidden">
-        <div class="gameSetUp hidden">
-            <fieldset>
-                <h2>Choose your game settings</h2>
-                <div>Player one name X
-                    <input type="text" name="playerOneName" id="playerOneName">
-                </div>
-                <div>Player two name O
-                    <input type="text" name="playerTwoName" id="playerTwoName">
-                </div>
-                <div>Play against an AI.
+    <div class="initialScreen">
+        <div class="gameSetUp">
+            <h2>Choose your game settings</h2>
+            <div>Please enter the name of Player One (X)
+                <input type="text" name="playerOneName" id="playerOneName">
+            </div>
+            <div>Please enter the name of Player Two (O)
+                <input type="text" name="playerTwoName" id="playerTwoName">
+                <div>Turn Player Two into an AI player.
                     <input type="checkbox" name="playerAI" id="playerAI">
-                    <span class="slider"></span>
                 </div>
-                <div>Who should move first?
-                    X<input type="checkbox" id="startX" name="startX">
-                    O<input type="checkbox" id="startO" name="startO">
-                </div>
-                <button id="startGame">Start the game</button>
-            </fieldset>
+            </div>
+
+            <div class="moveOrder">
+                <p>Which player should make the first move?</p>
+                <label for="X">Player One (X)</label>
+                    <input type="radio" name="group1" value="X">
+                <label for="O">Player Two (O)</label>
+                    <input type="radio" name="group1" value="O" checked>
+            </div>
+            <div class="startGame">
+                <button type="submit" id="startGame">Start the game</button>
+            </div>
         </div>
     </div>
-    <div class="gameScreen">
+    <div class="gameScreen hidden">
         <div class="topnav ">Tic Tac Toe</div>
         <div class="gameboard ">
+            <div class="playerOneScore">
+                <p id="scoreBoardLeftName"><br>score</p>
+                <div><h2 id="p1scoreboard">0</h2></div>
+            </div>
             <div class="buttons">
                 <button id="0" class="space field"></button>
                 <button id="1" class="space field"></button>
@@ -44,11 +51,15 @@
                 <button id="7" class="space field"></button>
                 <button id="8" class="space field"></button>
             </div>
+            <div class="playerTwoScore">
+                <p id="scoreBoardRightName"><br>score</p>
+                <div><h2 id="p2scoreboard">0</h2></div>
+            </div>
         </div>
-        <div class="bottomnav"> 
+        <div class="bottomnav">
             <p>Created by Blazej Wartalski</p>
             <button id="restart">
-                Restart
+                Clear the board
             </button>
         </div>
         

@@ -1,15 +1,25 @@
 btns = document.querySelectorAll(".space");
+scoreBoardLeft = document.querySelector("#p1scoreboard");
+scoreBoardLeftName = document.querySelector("#scoreBoardLeftName");
+scoreBoardRight = document.querySelector("#p2scoreboard");
+scoreBoardRightName = document.querySelector("#scoreBoardRightName");
+
+console.log(scoreBoardLeftName)
 restart = document.querySelector("#restart");
+restart.addEventListener("click",restartGame);
 
+btnStartGame = document.querySelector("#startGame");
+btnStartGame.addEventListener("click",startGame);
 
+gameConfigurationScreen = document.querySelector(".initialScreen");
+gameScreen = document.querySelector(".gameScreen");
 
-restart.addEventListener("click",restartGame)
-
-
-var currentPlayer = "X"
+var playerOneTotalWins = 0;
+var playerTwoTotalWins = 0;
 
 var playerOneScore = [];
 var playerTwoScore = [];
+
 var emptySquares = [];
 const winCondition = [
 ["0", "1", "2"],
@@ -21,39 +31,56 @@ const winCondition = [
 ["0","4","8"],
 ["2","4","6"]]
 
-btns.forEach((button) => {
-    button.addEventListener("click", () => {
-        if (button.classList.contains("checked")) {
-        } else {
-            button.classList.add('checked');
-            button.textContent = currentPlayer
-            if (currentPlayer == "X") {
-                playerOneScore.push(button.id)
-                if (findWinner(playerOneScore)) {
-                    console.log("X is the winner")
-                    return
-                } else {
-                currentPlayer = "O"
-                computerMove();
+function initialiseTheGame(packagedValues) {
+    currentPlayer = packagedValues.firstPlayer;
+    computerPlayer = packagedValues.AI;
+    playerOneName = packagedValues.nameP1;
+    playerTwoName = packagedValues.nameP2;
+
+    btns.forEach((button) => {
+        if (currentPlayer == "O" && computerPlayer == true) {
+            computerMove(); }
+        else 
+        button.addEventListener("click", () => {
+            if (button.classList.contains("checked")) {
+                alert("this space is already taken")
+            } else {
+                if (currentPlayer == "X") {
+                    button.classList.add('checked');
+                    console.log(currentPlayer);
+                    button.textContent = currentPlayer
+                    playerOneScore.push(button.id)
+                    if (findWinner(playerOneScore)) {
+                        console.log("X is the winner")
+                        return
+                    } else {
+                    currentPlayer = "O"
+                    }
+                } else if (currentPlayer == "O" && computerPlayer == false) {
+                    button.classList.add('checked');
+                    console.log(currentPlayer);
+                    button.textContent = currentPlayer
+                    playerTwoScore.push(button.id)
+                    if (findWinner(playerTwoScore)) {
+                        console.log("O is the winner")
+                    } else {
+                    return currentPlayer = "X"
+                    }
                 }
-            } else if (currentPlayer == "O") {
-                computerMove();
-                // playerTwoScore.push(button.id)
-                // if (findWinner(playerTwoScore)) {
-                //     console.log("O is the winner")
-                // } else {
-                // computerMove();
-                // return currentPlayer = "X"
-                // }
             }
-        }
-    });
-})
+        });
+    })
+}
 
 function findWinner(playerScore) {
     for (i = 0; i < winCondition.length; i++) {
         a = winCondition[i]
         if(a.every(field => playerScore.includes(field))) {
+            if (currentPlayer == "X") {
+                scoreBoardLeft.textContent = (Number(scoreBoardLeft.textContent)+1) 
+            } else if (currentPlayer == "O") {
+                scoreBoardRight.textContent = (Number(scoreBoardRight.textContent)+1)
+            }
             return alert(`${currentPlayer} is the winner`)
         }
     }
@@ -61,10 +88,24 @@ function findWinner(playerScore) {
         return console.log("It's a draw");
     };
 }
-
+function startGame() {
+    var playerOneName = document.querySelector("#playerOneName").value;
+    var playerTwoName = document.querySelector("#playerTwoName").value;
+    var playerTwoAI = document.querySelector("#playerAI");
+    var firstMove = document.querySelector('input[name="group1"]:checked').value;
+    let AI = playerTwoAI.checked,
+        firstPlayer = firstMove;
+    packagedValues = {AI, firstPlayer};
+    gameConfigurationScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    scoreBoardLeftName.textContent = playerOneName + " " + scoreBoardLeftName.textContent;
+    scoreBoardRightName.textContent = playerTwoName + " " + scoreBoardRightName.textContent;
+    initialiseTheGame(packagedValues);
+    return packagedValues;
+}
 function restartGame() {
     alert("Game restarted");
-    currentPlayer = "X";
+    currentPlayer = packagedValues.firstPlayer;
     playerOneScore = [];
     playerTwoScore = [];
     btns.forEach((button) => {
@@ -81,26 +122,20 @@ function computerMove() {
         var desiredSquare = emptySquaresArray2.find(element => element.id === "4");
         if (!desiredSquare.classList.contains("checked")) {
             nextComputerMove = (desiredSquare);
-            console.log("Occupy the middle")
         }}
     else {
         validMove = (Math.floor(Math.random() * emptySquares.length))
         winningMove = lookForWinningMove(playerTwoScore, emptySquares);
-        console.log("Looking at human moves now!")
         humanWinningMove = lookForWinningMove(playerOneScore,emptySquares);
         if (typeof winningMove !== "undefined") {
-            console.log(winningMove);
             winningMove = winningMove.toString();
             var winningNumber = emptySquaresArray2.find(element => element.id === winningMove);
-            console.log("take the win");
             nextComputerMove = (winningNumber);
         } else if (typeof humanWinningMove !== "undefined") { 
             humanWinningMove = humanWinningMove.toString();
             var winningNumber = emptySquaresArray2.find(element => element.id === humanWinningMove);
-            console.log("Stop human from winning");
             nextComputerMove = (winningNumber);
         }   else {    
-            console.log("Random move")
             nextComputerMove = (emptySquares[validMove]);
         }
     }
@@ -108,8 +143,7 @@ function computerMove() {
     nextComputerMove.classList.add('checked');
     playerTwoScore.push(nextComputerMove.id)
     findWinner(playerTwoScore);
-    console.log("computer phase over");
-    return currentPlayer = "X"
+    return currentPlayer = 'X';
 }
 
 function lookForWinningMove(Score, emptySquares) {
@@ -119,12 +153,9 @@ function lookForWinningMove(Score, emptySquares) {
         let intersectionArray = a.filter(value => Score.includes(value));
 
         if (intersectionArray.length == 2) {
-            console.log(intersectionArray);
             var squareNeededToWin = a.filter(square => !intersectionArray.includes(square));
-            console.log(squareNeededToWin);
             if (squareNeededToWin.some(square => emptySquaresId.includes(square))) {
                 const winningSquare = emptySquaresId.filter(square => squareNeededToWin.includes(square))
-                console.log(winningSquare);
                 return winningSquare;
             }
         }
@@ -145,5 +176,5 @@ function arrayOfEmptySquares(emptySquares) {
 // Computer logic 
 // If middle square is empty, take it. DONE
 // Else, check if a game winning move is possible. DONE
-// Else, check if you can block human from winning. 
+// Else, check if you can block human from winning. DONE
 // Else, make a random move. DONE
