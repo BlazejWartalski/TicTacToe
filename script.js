@@ -4,7 +4,6 @@ scoreBoardLeftName = document.querySelector("#scoreBoardLeftName");
 scoreBoardRight = document.querySelector("#p2scoreboard");
 scoreBoardRightName = document.querySelector("#scoreBoardRightName");
 
-console.log(scoreBoardLeftName)
 restart = document.querySelector("#restart");
 restart.addEventListener("click",restartGame);
 
@@ -36,7 +35,6 @@ function initialiseTheGame(packagedValues) {
     computerPlayer = packagedValues.AI;
     playerOneName = packagedValues.nameP1;
     playerTwoName = packagedValues.nameP2;
-
     btns.forEach((button) => {
         if (currentPlayer == "O" && computerPlayer == true) {
             computerMove(); }
@@ -47,22 +45,17 @@ function initialiseTheGame(packagedValues) {
             } else {
                 if (currentPlayer == "X") {
                     button.classList.add('checked');
-                    console.log(currentPlayer);
                     button.textContent = currentPlayer
                     playerOneScore.push(button.id)
                     if (findWinner(playerOneScore)) {
-                        console.log("X is the winner")
-                        return
                     } else {
                     currentPlayer = "O"
                     }
                 } else if (currentPlayer == "O" && computerPlayer == false) {
                     button.classList.add('checked');
-                    console.log(currentPlayer);
                     button.textContent = currentPlayer
                     playerTwoScore.push(button.id)
                     if (findWinner(playerTwoScore)) {
-                        console.log("O is the winner")
                     } else {
                     return currentPlayer = "X"
                     }
@@ -77,15 +70,19 @@ function findWinner(playerScore) {
         a = winCondition[i]
         if(a.every(field => playerScore.includes(field))) {
             if (currentPlayer == "X") {
-                scoreBoardLeft.textContent = (Number(scoreBoardLeft.textContent)+1) 
+                var winner = playerOneName;
+                scoreBoardLeft.textContent = (Number(scoreBoardLeft.textContent)+1)
             } else if (currentPlayer == "O") {
+                var winner = playerTwoName;
                 scoreBoardRight.textContent = (Number(scoreBoardRight.textContent)+1)
             }
-            return alert(`${currentPlayer} is the winner`)
+            alert(`${winner} wins the round`)
+            restartGame();
         }
     }
     if (playerOneScore.length+playerTwoScore.length == 9) {
-        return console.log("It's a draw");
+        alert("It's a draw");
+        restartGame();
     };
 }
 function startGame() {
@@ -94,8 +91,10 @@ function startGame() {
     var playerTwoAI = document.querySelector("#playerAI");
     var firstMove = document.querySelector('input[name="group1"]:checked').value;
     let AI = playerTwoAI.checked,
-        firstPlayer = firstMove;
-    packagedValues = {AI, firstPlayer};
+        firstPlayer = firstMove,
+        nameP1 = playerOneName,
+        nameP2 = playerTwoName;
+    packagedValues = {AI, firstPlayer, nameP1, nameP2};
     gameConfigurationScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
     scoreBoardLeftName.textContent = playerOneName + " " + scoreBoardLeftName.textContent;
@@ -167,7 +166,7 @@ function arrayOfEmptySquares(emptySquares) {
     let emptySquaresArrayId = [];
     for (i = 0; i < emptySquaresArray.length; i++) {
         a = emptySquaresArray[i]
-        let id = a.id//.push(item)
+        let id = a.id
         emptySquaresArrayId.push(id);
     };
     return(emptySquaresArrayId);
